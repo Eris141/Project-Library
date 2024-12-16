@@ -19,32 +19,36 @@ function addBookToLibrary(book) {
   displayBooks(myLibrary);
 }
 
-const book1 = new Book("lost", "the one", "22", "yes")
+const book1 = new Book("Valhalla", "All Father Odin", "1000", "yes")
 addBookToLibrary(book1);
 
 
 
 function displayBooks(books) {
   myLibraryContainer.textContent = "";
-  books.forEach(book => {
+  books.forEach((book, index) => {
+
       const bookContainer = document.createElement("div");
       bookContainer.classList.add("book-container");
+
       const bookInfoContiner = document.createElement('div');
       bookInfoContiner.classList.add("book-info");
+
       const bookNameContainer = document.createElement('h4');
       const titleContainer = document.createElement('p');
       const authorContainer = document.createElement("p");
       const pagesContainer = document.createElement("p");
-      const readContainer = document.createElement("p");
+      const readContainer = document.createElement("button");
       const deleteButton = document.createElement("button");
       
       bookNameContainer.textContent = `Book Name: ${book.title}`;
       titleContainer.textContent = ` Title: ${book.title}`;
       authorContainer.textContent = ` Author: ${book.author}`;
       pagesContainer.textContent = `Pages: ${book.pages}`;
-      readContainer.textContent = `Readed: ${book.read}`;
+      readContainer.textContent = book.read ? "Read: Yes" : "Read: No";
+      readContainer.classList.add(book.read ? "read" : "not-read");
       deleteButton.textContent = "Delete";
-      
+       
       // let list = document.createElement("p");
       // list.textContent = book.title + book.author + book.pages + book.read;
       
@@ -55,14 +59,22 @@ function displayBooks(books) {
       bookContainer.appendChild(bookNameContainer);
       bookContainer.appendChild(bookInfoContiner);
       bookContainer.appendChild(deleteButton);
-      
       myLibraryContainer.appendChild(bookContainer);
+
+      readContainer.addEventListener('click', () => {
+        book.read = !book.read;
+        readContainer.textContent = book.read ? "Read: Yes" : "Read: No";
+        readContainer.classList.toggle("read");
+        readContainer.classList.toggle("not-read");
+      })
 
     
       deleteButton.addEventListener('click', (e) => {
         myLibraryContainer.removeChild(bookContainer);
-        myLibrary.splice(e.target, 1)
+        myLibrary.splice(index, 1)
+        displayBooks(myLibrary);
       })
+
     })
   }
 
@@ -78,14 +90,23 @@ addBookButton.addEventListener('click', () => {
 })
 
 submitButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  const bookTitle = dialog.querySelector("#book-title").value;
-  const authorName = dialog.querySelector("#author-name").value;
-  const pages = dialog.querySelector("#pages").value;
-  const readed = dialog.querySelector('input[name="read"]:checked').value;
+  e.preventDefault(); // Prevent form submission
+  const bookTitle = form.querySelector("#book-title").value.trim();
+  const authorName = form.querySelector("#author-name").value.trim();
+  const pages = form.querySelector("#pages").value.trim();
+  const readCheckbox = form.querySelector("#readed");
+  const readStatus = readCheckbox.checked;
 
-  let book = new Book(bookTitle, authorName, pages, readed);
+  if (!bookTitle || !authorName || !pages || isNaN(pages
+  )) {
+    alert("Please fill out all fields correctyl!")
+    return;
+  }
 
+  
+  let book = new Book(bookTitle, authorName, pages, readStatus);
+
+  console.log(book);
   addBookToLibrary(book);
   form.reset();
   dialog.close();
