@@ -11,6 +11,38 @@
     <h1>My Library!!</h1>
   </div>
 
+  <div class="div-button">
+    <button class="add-book">New Book</button>
+  </div>
+
+  <dialog class="dialog">
+    <form action="" method="get" class="book-details">
+      <div class="book-title">
+        <label for="book-title">Book Title</label>
+        <input type="text" name="book-title" id="book-title" placeholder="Enter title" maxlength="20" required>
+      </div>
+      <div class="author-name">
+        <label for="author-name">Author Name</label>
+        <input type="text" name="author-name" id="author-name" placeholder="enter author name" maxlength="20" required>
+      </div>
+      <div class="pages">
+        <label for="pages">Num of pages</label>
+        <input type="number" name="pages" id="pages" placeholder="pages" maxlength="6" required>
+      </div>
+      <div class="read">
+        <label for="read">Readed :</label>
+        <span>yes</span>
+        <input type="radio" name="read" id="read" value="yes" checked>
+        <span>no</span>
+        <input type="radio" name="read" id="read" value="no">
+
+      </div>
+
+      <button class="cancel-button" type="reset" value="resetBtn">Cancel</button>
+      <button type="submit" class="submit-button" value="comfigBtn">Submit</button>
+    </form>
+  </dialog>
+
   <div class="my-library-container">
   </div>
   <script src="script/script.js"></script>
